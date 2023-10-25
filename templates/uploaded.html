@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+
+{% endblock %}
+
+
+
+{% block body %}
+
+<h2>File uploaded succesfully</h2>
+<ul>
+    {% for file in files_filename %}
+        <li>{{file}} - uploaded succesfully</li>
+    {% endfor %}
+
+</ul>
+
+<form method="POST" action="/final_operation">
+    <button type="submit">Clean and save files</button>
+</form>
+
+<form>
+    <input type="submit" name="Final_file" value="Final_file">
+    <input type="submit" name="Dashboard_file" value="Dashboard_file">
+</form>
+
+
+ {% endblock %}
