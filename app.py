@@ -4,13 +4,14 @@ from wtforms import FileField, SubmitField
 from werkzeug.utils import secure_filename
 import os
 from wtforms.validators import InputRequired
+from flask_wtf.file import FileAllowed
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
 app.config['UPLOAD_FOLDER'] = "static\\files"
 
 class UploadFileForm(FlaskForm):
-    file = FileField('File', validators=[InputRequired()])
+    file = FileField('File', validators=[InputRequired(), FileAllowed(['xlsx', 'csv'], 'Excel and CSV files only!')])
     submit = SubmitField("Upload File")
 
 @app.route('/', methods=['GET', 'POST'])
