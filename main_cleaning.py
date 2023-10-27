@@ -9,7 +9,7 @@ pd.options.mode.chained_assignment = None
 # Defining the path where files are stored
 path = "static/files/"
 # path = 'Other_stuff/Jupiter Campaign Reports/Jupiter Specials - Akshat/Publisher Reports/'
-dir_list = os.listdir(path)
+# dir_list = os.listdir(path)
 
 # dir_list
 # Reading Geo CSV
@@ -811,7 +811,7 @@ def create_new_csv_format_12(df, dir_list_split, campaign_name, accrual_campaign
 
 
 
-def final_operation():
+def final_operation(dir_list):
     for i in range(len(dir_list)):
         # start_date_time = None
         # end_date_time = None
