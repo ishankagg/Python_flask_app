@@ -22,10 +22,17 @@
     <button type="submit">Clean and save files</button>
 </form> -->
 
-<form>
-    <input type="submit" name="Final_file" value="Final_file">
-    <input type="submit" name="Dashboard_file" value="Dashboard_file">
+<form action="{{ url_for('download_final_file') }}" method="get">
+    <button type="submit">Download Final File</button>
 </form>
+
+<hr>
+
+<form action="{{ url_for('download_dashboard_file') }}" method="get">
+    <button type="submit">Download Dashboard File</button>
+</form>
+
+
 
 
  {% endblock %}

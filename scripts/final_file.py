@@ -90,10 +90,10 @@ def final_file_output():
         df_concat.to_csv('output/files_combined.csv', index=False)
         print('Final file created')
 
-        # Deleting the files
-        for files in dir_list:
-            os.remove(f'{path}{files}')
-            print(f'files deleted-{path}{files}')
+        # # Deleting the files
+        # for files in dir_list:
+        #     os.remove(f'{path}{files}')
+        #     print(f'files deleted-{path}{files}')
         
 
     except Exception as e:

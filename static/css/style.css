@@ -2,3 +2,17 @@ body {
     margin : 0;
     font-family : sans-serif;
 }
+
+.content {
+    position: relative;
+    width: 150px;
+    height: 90px;
+    float: right;
+}
+
+.content img {
+    position: absolute;
+    top: -20px;
+    right: 0px;
+    
+}
