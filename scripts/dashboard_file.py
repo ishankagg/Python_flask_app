@@ -46,7 +46,7 @@ def dashboard_file():
         df_merged['Geo Targeting'] = df_merged['Geo Targeting'].fillna('Pan India')
 
         # Initialize 'Brand', 'Line Item Name' columns
-        df_merged['Brand'] = ''
+        df_merged['Brand'] = df_merged['Identifiers']
         df_merged['Line Item Name'] = df_merged['Publisher'] + "_" + df_merged['Accrual Campaign Name'] + "_" + df_merged['Geo Targeting']
 
         # Drop unnecessary columns
