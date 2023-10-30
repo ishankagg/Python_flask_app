@@ -1,14 +1,17 @@
-from flask import Flask, render_template, url_for, send_from_directory
+from flask import Flask, render_template, url_for, send_from_directory, redirect
 from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField, MultipleFileField
 from werkzeug.utils import secure_filename
 import os
 from wtforms.validators import InputRequired
 from flask_wtf.file import FileAllowed
-from main_cleaning import final_operation
 import time
-# from final_file import final_file_output
 import subprocess
+import sys
+
+sys.path.insert(0,'scripts')
+
+from main_cleaning import final_operation
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
@@ -92,7 +95,12 @@ def download_dashboard_file():
     return "The Dashboard file could not be found after multiple attempts."
 
 
+@app.route('/clean_files', methods=['GET', 'POST'])
+def clean_files():
+    process = subprocess.Popen(['python', 'scripts/clean_files.py'])
+    process.wait()
 
+    return redirect("/", code=302)
 
 
 
