@@ -4,6 +4,8 @@ import pandas as pd
 import time
 from datetime import datetime
 
+# github trial
+
 pd.options.mode.chained_assignment = None
 
 # Defining the path where files are stored
@@ -63,6 +65,11 @@ publisher_format_11 = tuple(publisher11['Publishers'].tolist())
 # Reading publishers CSV
 publisher12 = pd.read_csv('main_input_files\publisher_format_12.csv')
 publisher_format_12 = tuple(publisher12['Publishers'].tolist())
+
+# Reading publishers CSV
+publisher13 = pd.read_csv('main_input_files\publisher_format_13.csv')
+publisher_format_13 = tuple(publisher13['Publishers'].tolist())
+
 
 
 # Retrieve Geo name from geo file
@@ -220,6 +227,15 @@ def get_publisher_12(publisher_name):
         if publisher.strip().lower() == publisher_name.strip().lower():
             global publisher_name_file_12
             publisher_name_file_12 = publisher
+            return publisher
+    return None
+
+# Retrieve a publisher from publisher_format_13 list based on given publisher_name
+def get_publisher_13(publisher_name):
+    for publisher in publisher_format_13:
+        if publisher.strip().lower() == publisher_name.strip().lower():
+            global publisher_name_file_13
+            publisher_name_file_13 = publisher
             return publisher
     return None
 
@@ -809,7 +825,38 @@ def create_new_csv_format_12(df, dir_list_split, campaign_name, accrual_campaign
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
 
+def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
+    try:
 
+        df['Accrual campaign name'] = accrual_campaign_name
+        df['Campaign Name'] = campaign_name
+        df['Publisher'] = publisher_name
+
+        df.rename(columns=
+            {"Reporting Starts": "Date", 
+            "Ad Set Name": "Concept Name", 
+            "Impressions (SUM)":"Impressions",
+            "Facebook Link Clicks (SUM)":"Clicks",
+            "Spent in INR (SUM)":"Spends",
+            "Facebook Video Plays to 25% (SUM)":"25% Views",
+            "Facebook Video Plays to 50% (SUM)":"50% Views",
+            "Facebook Video Plays to 75% (SUM)":"75% Views",
+            "Facebook Video Plays to 100% (SUM)":"100% Views"}, inplace=True)
+
+        
+        # Formatting the date
+        start_date_time, end_date_time = formating_date(df, campaign_name, publisher_name)
+
+        # Assigning output file path
+        output_file_path = f"final_cleaned_files/cleaned_{accrual_campaign_name}_{publisher_name_file_13}_{start_date_time}_{end_date_time}.csv"
+
+        # Df to CSV
+        df.to_csv(output_file_path, index=False)
+
+        print("New CSV file created successfully.")  
+
+    except Exception as e:
+        print(f"Error processing the Excel file: {e}")
 
 def final_operation(dir_list):
     for i in range(len(dir_list)):
@@ -886,6 +933,9 @@ def final_operation(dir_list):
                 print("amazing 12 publisher found")
                 create_new_csv_format_12(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
 
+            elif get_publisher_13(publisher_name) is not None:
+                print("amazing 13 publisher found")
+                create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
 
             else:
                 print("failed")
