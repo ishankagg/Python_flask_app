@@ -11,7 +11,7 @@ pd.options.mode.chained_assignment = None
 # Defining the path where files are stored
 path = "static/files/"
 # path = 'Other_stuff/Jupiter Campaign Reports/Jupiter Specials - Akshat/Publisher Reports/'
-# dir_list = os.listdir(path)
+dir_list = os.listdir(path)
 
 # dir_list
 # Reading Geo CSV
@@ -249,8 +249,12 @@ def create_new_csv_format_1(df, dir_list_split, campaign_name, accrual_campaign_
         # Removing NA and total rows
         df = df[df[default_columns[0]] != 'Total']
 
-        # Split the "Line Item Name" column and get the "GEO" value
-        df['GEO'] = df['Line item'].apply(get_geo)
+        if 'Line item' in df.columns:
+            # Split the "Line Item Name" column and get the "GEO" value
+            df['GEO'] = df['Line item'].apply(get_geo)
+        else:
+            df['GEO'] = ''
+            df['Line item'] = ''
 
         # Adding a column to dataframe
         df['Accrual campaign name'] = accrual_campaign_name
@@ -285,15 +289,15 @@ def create_new_csv_format_2(df, dir_list_split, campaign_name, accrual_campaign_
         # Adding a column to dataframe
         df['Accrual campaign name'] = accrual_campaign_name
 
-        # Create the new DataFrame with the required columns
-        df = df[['Date', 'Publisher', 'Accrual campaign name', 'Concept', 'Geos', 'Impressions', 'Sum Of Clicks',]]
+        # # Create the new DataFrame with the required columns
+        # df = df[['Date', 'Publisher', 'Accrual campaign name', 'Concept', 'Geos', 'Impressions', 'Sum Of Clicks',]]
 
         # Rename the columns as per the user input
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
 
         # Renaming columns names to main format
-        df.rename(columns = {'Concept':'Concept Name', 'Geos':'GEO', 'Sum Of Clicks':'Clicks'}, inplace = True)
+        df.rename(columns = {'Geo Targeting':'GEO'}, inplace = True)
 
         # Formatting the date
         start_date_time, end_date_time = formating_date(df, campaign_name, publisher_name)
@@ -791,11 +795,11 @@ def create_new_csv_format_12(df, dir_list_split, campaign_name, accrual_campaign
         if publisher_name.strip().title() == 'Dsp2':
             df['Concept Name'] = df['Creative']
             df['Spends'] = ''
-            for i in range(len(df)):
-                line_item_split = str(df['Line Item'][i]).split('_')
-                df['Targeting'][i] = line_item_split[2].strip()
+            # for i in range(len(df)):
+            #     line_item_split = str(df['Line Item'][i]).split('_')
+            #     df['Targeting'][i] = line_item_split[2].strip()
 
-            df['GEO'] = df['Targeting']
+            df['GEO'] = df['Line Item']
 
         elif publisher_name.strip().title() == 'Dmp':
             df['Concept Name'] = df['Creative']
@@ -952,6 +956,6 @@ def final_operation(dir_list):
         # time.sleep(2)
 
 if __name__ == "__main__":
-    final_operation()
+    final_operation(dir_list)
 
 

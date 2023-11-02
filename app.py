@@ -100,7 +100,7 @@ def clean_files():
     process = subprocess.Popen(['python', 'scripts/clean_files.py'])
     process.wait()
 
-    return redirect("/", code=302)
+    return redirect("/upload", code=302)
 
 
 
