@@ -14,4 +14,8 @@
     {{form.files()}}
     {{form.submit()}}
 </form>
+<hr>
+<form action="{{ url_for('clean_files') }}" method="get">
+    <button class="Clean_button" type="submit">Delete existing files</button>
+</form>
 {% endblock %}

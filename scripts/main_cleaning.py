@@ -260,9 +260,8 @@ def create_new_csv_format_1(df, dir_list_split, campaign_name, accrual_campaign_
         df['Accrual campaign name'] = accrual_campaign_name
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
-
         # Renaming columns names to main format
-        df.rename(columns = {'Line item':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
+        df.rename(columns = {'Creative':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
 
         # Formatting the date
         start_date_time, end_date_time = formating_date(df, campaign_name, publisher_name)
