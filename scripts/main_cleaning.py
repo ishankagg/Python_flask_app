@@ -3,6 +3,7 @@ import csv
 import pandas as pd
 import time
 from datetime import datetime
+import re
 
 # github trial
 
@@ -74,7 +75,7 @@ publisher_format_13 = tuple(publisher13['Publishers'].tolist())
 
 # Retrieve Geo name from geo file
 def get_geo(line_item_name):
-    parts = str(line_item_name).split('_')
+    parts = re.split('_| - ', str(line_item_name))
     for part in parts:
         if part.strip().lower() in geo_data.strip().lower():
             return part
@@ -261,7 +262,10 @@ def create_new_csv_format_1(df, dir_list_split, campaign_name, accrual_campaign_
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
         # Renaming columns names to main format
-        df.rename(columns = {'Creative':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
+        if publisher_name.strip().title() == 'Abp' or 'Ei Samay':
+            df.rename(columns = {'Concept':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
+        else:
+            df.rename(columns = {'Creative':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
 
         # Formatting the date
         start_date_time, end_date_time = formating_date(df, campaign_name, publisher_name)
@@ -295,8 +299,10 @@ def create_new_csv_format_2(df, dir_list_split, campaign_name, accrual_campaign_
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
 
+        df['GEO'] = df['Ad Name'].apply(get_geo)
+
         # Renaming columns names to main format
-        df.rename(columns = {'Geo Targeting':'GEO'}, inplace = True)
+        df.rename(columns = {'Ad Name':'Concept Name'}, inplace = True)
 
         # Formatting the date
         start_date_time, end_date_time = formating_date(df, campaign_name, publisher_name)
@@ -321,7 +327,7 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         
         # print(publisher_name_file_3)added
         default_columns = list(df.columns)
-        view_columns = ['Geo Targeting','Concept Name','Views', '25% Views', '50% Views', '75% Views', '100% Views']
+        view_columns = ['Publisher','Geo Targeting','Concept Name','Views', '25% Views', '50% Views', '75% Views', '100% Views','Spends']
 
         # check views column 
         for heads in view_columns:
@@ -352,8 +358,9 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         # df = df[['Date', 'Publisher', 'Accrual campaign name', 'Concept Name', 'Geo Targeting', 'Impressions', 'Engagements', 'Clicks', 'Views','25% Views', '50% Views', '75% Views', '100% Views','Spends']]
 
         # For jupiter sale - Mcanvas
-        if publisher_name.strip().title() == 'Mcanvas':
-            df['Concept Name'] = df['Campaign Name']
+        if publisher_name.strip().title() == 'Paytm':
+            df['Concept Name'] = df['Concept']
+            df['Geo Targeting'] = df['Geo']
 
         # For jupiter sale - Glance
         if publisher_name.strip().title() == 'Glance':
@@ -555,7 +562,7 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
         df['Publisher'] = publisher_name
 
         # Renaming specific columns in the DataFrame
-        df.rename(columns = {'Line item':'Concept Name','Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
+        df.rename(columns = {'Creative':'Concept Name','Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
         
         # Formatting the date
         start_date_time, end_date_time = formating_date(df, campaign_name, publisher_name)
@@ -637,8 +644,12 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
         column_names = list(df.columns)
         first_column_name = column_names[0]
 
-        # Find the index to drop rows up to "Line Item"
-        index_to_drop_to = df[df[first_column_name] == 'Publisher'].index[0]
+        if publisher_name == 'Airtel':
+            # Find the index to drop rows up to "Line Item"
+            index_to_drop_to = df[df[first_column_name] == 'Date'].index[0]
+        else:
+            # Find the index to drop rows up to "Line Item"
+            index_to_drop_to = df[df[first_column_name] == 'Publisher'].index[0]
 
         df = df.drop(range(index_to_drop_to))
 
@@ -658,15 +669,21 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
         # Reset the index
         df.reset_index(drop=True, inplace=True)
 
-        # Split the "Line Item Name" column and get the "GEO" value
-        df['GEO'] = df['Geo Targeting'].apply(get_geo)
+        if 'Geo Targeting' in df.columns:
+            # Split the "Line Item Name" column and get the "GEO" value
+            df['GEO'] = df['Geo Targeting'].apply(get_geo)
+        else:
+            df['GEO'] = ''
 
         # Assigning the column values
         df['Accrual campaign name'] = accrual_campaign_name
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
 
-        df['Concept Name'] = df['Line Item Name']
+        if 'Line Item Name' in df.columns:
+            df['Concept Name'] = df['Line Item Name']
+        else:
+            df['Concept Name'] = ''
 
         # # Converting date to format
         # for i in range(len(df['Date'])):
@@ -682,6 +699,22 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
         # end_date_time = max(df['Date'])
         # start_date = start_date_time.strftime('%d-%m-%Y')
         # end_date = end_date_time.strftime('%d-%m-%Y')
+
+        # print(publisher_name_file_3)added
+        default_columns = list(df.columns)
+        view_columns = ['Geo Targeting','Concept Name','Views', '25% Views', '50% Views', '75% Views', '100% Views']
+
+        # check views column 
+        for heads in view_columns:
+            head_existence = False
+            if heads in default_columns:
+                head_existence = True
+                if head_existence == True:
+                    pass
+            elif head_existence == False:
+                df[heads] = ''  
+            else:
+                print("fu")
 
         output_file_path = f"final_cleaned_files/cleaned_{accrual_campaign_name}_{publisher_name_file_8}_{start_date_time}_{end_date_time}.csv"
 
@@ -837,7 +870,7 @@ def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign
 
         df.rename(columns=
             {"Reporting Starts": "Date", 
-            "Ad Set Name": "Concept Name", 
+            "Ad Variant Name": "Concept Name", 
             "Impressions (SUM)":"Impressions",
             "Facebook Link Clicks (SUM)":"Clicks",
             "Spent in INR (SUM)":"Spends",
@@ -845,6 +878,8 @@ def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign
             "Facebook Video Plays to 50% (SUM)":"50% Views",
             "Facebook Video Plays to 75% (SUM)":"75% Views",
             "Facebook Video Plays to 100% (SUM)":"100% Views"}, inplace=True)
+        
+        df['GEO'] = df['Ad Set Name'].apply(get_geo)
 
         
         # Formatting the date

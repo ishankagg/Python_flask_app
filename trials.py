@@ -576,7 +576,7 @@ df['Clicks'] = df['Clicks'].apply(pd.to_numeric)
 
 import pandas as pd
 
-input_file_path_plan = "static/files/Jupiter 23_Wave3_Vidmate.xlsx"
+input_file_path_plan = "static/files/Amazon WRS Campaign (Nov-Dec 2023)_Sale_Truecaller-Impact.xlsx"
 # output_file_path = 'cleaned_pinkvilla.csv'
 output_file_path = f"cleaned_1234.csv"
 
@@ -589,21 +589,38 @@ df
 
 df.columns
 
-df.rename(columns=
-    {"Reporting Starts": "Date", 
-    "Ad Set Name": "Concept Name", 
-    "Impressions (SUM)":"Impressions",
-    "Facebook Link Clicks (SUM)":"Clicks",
-    "Spent in INR (SUM)":"Spends",
-    "Facebook Video Plays to 25% (SUM)":"25% Views",
-    "Facebook Video Plays to 50% (SUM)":"50% Views",
-    "Facebook Video Plays to 75% (SUM)":"75% Views",
-    "Facebook Video Plays to 100% (SUM)":"100% Views"}, inplace=True)
+column_names = list(df.columns)
+first_column_name = column_names[0]
+
+index_to_drop_to = df[df[first_column_name] == 'Date'].index[0]
+
+df = df.drop(range(index_to_drop_to))
+
+# Reset the index
+df.reset_index(drop=True, inplace=True)
+
+# Change the header of the file
+new_header = df.iloc[0]
+df = df[1:]
+df.columns = new_header.tolist()
+
+# Reset the index
+df.reset_index(drop=True, inplace=True)
 
 
-df.to_csv(output_file_path, index=False)
+import re
+import pandas as pd
+from sentence_transformers import SentenceTransformer, util
+from transformers import AutoTokenizer, AutoModel
+import os
 
-df.columns
+re.split(' - | _ |- |_',a)
+
+# Given string
+
+
+
+
 
 
 
