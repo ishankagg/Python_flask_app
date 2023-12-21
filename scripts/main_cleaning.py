@@ -561,6 +561,8 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
 
+        df['Creative'] = ''
+
         # Renaming specific columns in the DataFrame
         df.rename(columns = {'Creative':'Concept Name','Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
         
