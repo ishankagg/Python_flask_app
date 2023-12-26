@@ -28,12 +28,15 @@ def index():
     form = UploadFileForm()
     if form.validate_on_submit():
         files_filename = []
+        # try:
         for file in form.files.data:
             files_filename.append(file.filename)
             file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], file.filename))
         
         result = final_operation(files_filename)
         return render_template('uploaded.html', files_filename=files_filename, result=result)
+        # except Exception as e:
+
     
     return render_template('index.html', form=form)
 
