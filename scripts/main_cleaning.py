@@ -729,6 +729,7 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        # raise () 
 
 def create_new_csv_format_9(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:                
