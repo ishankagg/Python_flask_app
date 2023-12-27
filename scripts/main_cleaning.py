@@ -725,10 +725,9 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
 
         # Df to CSV
         df.loc[:,['Date', 'Publisher', 'Campaign Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']].to_csv(output_file_path, index=False)
-        print("New CSV file created successfully.")        
+        print("New CSV file created successfully.")  
 
     except Exception as e:
-        # return e
         print(f"Error processing the Excel file: {e}")
 
 def create_new_csv_format_9(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
