@@ -48,7 +48,6 @@ def index():
         # trying new branch
         # trying new branch
         # except Exception as e:
-
     
     return render_template('index.html', form=form)
 
