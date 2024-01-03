@@ -299,6 +299,7 @@ def create_new_csv_format_1(df, dir_list_split, campaign_name, accrual_campaign_
 def create_new_csv_format_2(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:
 
+        df = df[df['Date'] != 'Total']
         # Adding a column to dataframe
         df['Accrual campaign name'] = accrual_campaign_name
 
@@ -371,10 +372,10 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         # # Create the new DataFrame with the required columns
         # df = df[['Date', 'Publisher', 'Accrual campaign name', 'Concept Name', 'Geo Targeting', 'Impressions', 'Engagements', 'Clicks', 'Views','25% Views', '50% Views', '75% Views', '100% Views','Spends']]
 
-        # For jupiter sale - Mcanvas
-        if publisher_name.strip().title() == 'Paytm':
-            df['Concept Name'] = df['Concept']
-            df['Geo Targeting'] = df['Geo']
+        # # For jupiter sale - Mcanvas
+        # if publisher_name.strip().title() == 'Paytm':
+        #     df['Concept Name'] = df['Concept']
+        #     df['Geo Targeting'] = df['Geo']
 
         # For jupiter sale - Glance
         if publisher_name.strip().title() == 'Glance':
@@ -591,8 +592,11 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
             df.rename(columns = {'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
             df['Concept Name'] = ''
         else: 
-            df.rename(columns = {'Creative':'Concept Name','Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
-        
+            df.rename(columns = {'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
+            df['Concept Name'] = ''
+            df['Spends'] = ''
+
+
         # Formatting the date
         start_date_time, end_date_time = formating_date(df, campaign_name, publisher_name)
 
@@ -603,7 +607,7 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
 
         output_file_path = f"final_cleaned_files/cleaned_{accrual_campaign_name}_{publisher_name_file_6}_{start_date_time}_{end_date_time}.csv"
 
-        df.loc[:, ['Date', 'Publisher', 'Campaign Name', 'Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks']].to_csv(output_file_path, index=False)
+        df.loc[:, ['Date', 'Publisher', 'Campaign Name', 'Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks', 'Spends']].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")
         message = f"{accrual_campaign_name}_{publisher_name_file_6} - Processed Successfully"
