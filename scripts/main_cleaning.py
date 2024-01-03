@@ -77,7 +77,9 @@ publisher_format_13 = tuple(publisher13['Publishers'].tolist())
 def get_geo(line_item_name):
     parts = re.split('_| - ', str(line_item_name))
     for part in parts:
-        if part.strip().lower() in geo_data.strip().lower():
+        if part.strip().lower() == 'in':
+            continue
+        elif part.strip().lower() in geo_data.strip().lower():
             return part
     return None
 
@@ -378,8 +380,8 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         #     df['Geo Targeting'] = df['Geo']
 
         # For jupiter sale - Glance
-        if publisher_name.strip().title() == 'Glance':
-            df['Concept Name'] = df['Concept']
+        if publisher_name.strip().title() == 'Times Network' or 'Healthshots':
+            df['Concept Name'] = df['Line Item Name']
 
         # Rename the columns as per the user input
         df['Campaign Name'] = campaign_name
@@ -589,11 +591,11 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
 
         # Renaming specific columns in the DataFrame
         if publisher_name == 'Inshorts':
-            df.rename(columns = {'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
-            df['Concept Name'] = ''
+            df.rename(columns = {'Line item':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
+            # df['Concept Name'] = ''
         else: 
-            df.rename(columns = {'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
-            df['Concept Name'] = ''
+            df.rename(columns = {'Line item':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
+            # df['Concept Name'] = ''
             df['Spends'] = ''
 
 

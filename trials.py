@@ -617,10 +617,28 @@ import os
 re.split(' - | _ |- |_',a)
 
 # Given string
+geo = pd.read_csv('main_input_files\Geo.csv')
+geo_data = str(tuple(geo['Geos'].tolist()))
 
 
+line_item_name = "Amazon_Fresh SVD_IN_E-Commerce_Agency_Non PG_1st Jan-7th Jan_2024_Surat"
 
 
+def get_geo(line_item_name):
+    parts = re.split('_| - ', str(line_item_name))
+    print(parts)
+    for part in parts:
+        if part.strip().lower() == 'in':
+            continue
+        elif part.strip().lower() in geo_data.strip().lower():
+            print(part)
+            return part
+    return None
+
+get_geo(line_item_name)
+
+'Indore' in geo_data
+geo_data
 
 
 
