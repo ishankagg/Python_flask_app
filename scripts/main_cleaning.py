@@ -122,6 +122,12 @@ def formating_date(df, campaign_name, publisher_name):
     except Exception as e:
         print(f"error processing the date {e}")
 
+def return_success(e):
+    if e:
+        return str(e)
+    else:
+        return "Operation Success"
+
 
 # Retrieve a publisher from publisher_format_1 list based on given publisher_name
 def get_publisher_1(publisher_name):
@@ -725,11 +731,12 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
 
         # Df to CSV
         df.loc[:,['Date', 'Publisher', 'Campaign Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']].to_csv(output_file_path, index=False)
-        print("New CSV file created successfully.")  
+        print("New CSV file created successfully.")
+        return f"{accrual_campaign_name}_{publisher_name_file_8}-Success"
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        # raise () 
+        return f"{accrual_campaign_name}_{publisher_name_file_8}-{str(e)}"
 
 def create_new_csv_format_9(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:                
@@ -748,7 +755,7 @@ def create_new_csv_format_9(df, dir_list_split, campaign_name, accrual_campaign_
 
         # Df to CSV
         df.to_csv(output_file_path, index=False)
-        print("New CSV file created successfully.")  
+        print("New CSV file created successfully.")
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
