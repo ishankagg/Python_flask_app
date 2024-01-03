@@ -37,9 +37,11 @@ def index():
         
         files_filename_message = []
         for files in files_filename:
-            e = final_operation(files)
-            print(e)
-            files_filename_message.append(e)
+            print(f'files - {files}')
+            message = final_operation(files)
+            # print(f'e - - - {message}')
+            files_filename_message.append(message)
+        # print(f'file_filename_message - {files_filename_message}')
 
         # result = final_operation(files_filename)
         return render_template('uploaded.html', files_filename=files_filename_message)

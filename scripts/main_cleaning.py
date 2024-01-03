@@ -122,6 +122,12 @@ def formating_date(df, campaign_name, publisher_name):
     except Exception as e:
         print(f"error processing the date {e}")
 
+def return_success(e):
+    if e:
+        return str(e)
+    else:
+        return "Operation Success"
+
 
 # Retrieve a publisher from publisher_format_1 list based on given publisher_name
 def get_publisher_1(publisher_name):
@@ -281,8 +287,12 @@ def create_new_csv_format_1(df, dir_list_split, campaign_name, accrual_campaign_
         df.loc[:,['Date', 'Publisher', 'Campaign Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks']].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")
+        message = f"{accrual_campaign_name}_{publisher_name_file_1} - Processed Successfully"
+        return message
+
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_1} - Failed error - {str(e)}"
 
 
 
@@ -318,8 +328,12 @@ def create_new_csv_format_2(df, dir_list_split, campaign_name, accrual_campaign_
         df.loc[:,['Date', 'Publisher', 'Campaign Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks',]].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")
+        message = f"{accrual_campaign_name}_{publisher_name_file_2} - Processed Successfully"
+        return message
+
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_2} - Failed error - {str(e)}"
 
 
 def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
@@ -400,8 +414,11 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         df.loc[:,['Date', 'Publisher', 'Campaign Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Engagements', 'Clicks', 'Views', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")
+        message = f"{accrual_campaign_name}_{publisher_name_file_3} - Processed Successfully"
+        return message
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_9} - Failed error - {str(e)}"
 
 
 def create_new_csv_format_4(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
@@ -480,9 +497,13 @@ def create_new_csv_format_4(df, dir_list_split, campaign_name, accrual_campaign_
         df_cleaned.loc[:, ['Date', 'Publisher', 'Campaign Name', 'Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks','Spends']].to_csv(output_file_path, index=False)
         
         print("New CSV file created successfully.")
+        message = f"{accrual_campaign_name}_{publisher_name_file_4} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_4} - Failed error - {str(e)}"
+
 
 
 def create_new_csv_format_5(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
@@ -547,9 +568,12 @@ def create_new_csv_format_5(df, dir_list_split, campaign_name, accrual_campaign_
         df_cleaned.loc[:, ['Date', 'Publisher', 'Campaign Name', 'Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks', 'Reach', 'Spends']].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")
+        message = f"{accrual_campaign_name}_{publisher_name_file_5} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_5} - Failed error - {str(e)}"
 
 def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:        
@@ -582,9 +606,12 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
         df.loc[:, ['Date', 'Publisher', 'Campaign Name', 'Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks']].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")
+        message = f"{accrual_campaign_name}_{publisher_name_file_6} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_6} - Failed error - {str(e)}"
 
 
 def create_new_csv_format_7(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
@@ -637,9 +664,12 @@ def create_new_csv_format_7(df, dir_list_split, campaign_name, accrual_campaign_
         # Df to CSV
         df.loc[:,['Date', 'Publisher', 'Campaign Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Engagements', 'Clicks', 'Views', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']].to_csv(output_file_path, index=False)
         print("New CSV file created successfully.")
+        message = f"{accrual_campaign_name}_{publisher_name_file_7} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_7} - Failed error - {str(e)}"
 
 
 def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
@@ -725,11 +755,15 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
 
         # Df to CSV
         df.loc[:,['Date', 'Publisher', 'Campaign Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']].to_csv(output_file_path, index=False)
-        print("New CSV file created successfully.")  
+        print("New CSV file created successfully.")
+        message = f"{accrual_campaign_name}_{publisher_name_file_8} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        # raise () 
+        return f"{accrual_campaign_name}_{publisher_name_file_8} - Failed error - {str(e)}"
+    
+    # return f"{accrual_campaign_name}_{publisher_name_file_8}-Success"
 
 def create_new_csv_format_9(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:                
@@ -748,10 +782,13 @@ def create_new_csv_format_9(df, dir_list_split, campaign_name, accrual_campaign_
 
         # Df to CSV
         df.to_csv(output_file_path, index=False)
-        print("New CSV file created successfully.")  
+        print("New CSV file created successfully.")
+        message = f"{accrual_campaign_name}_{publisher_name_file_9} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_9} - Failed error - {str(e)}"
 
 def create_new_csv_format_10(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:                
@@ -780,9 +817,12 @@ def create_new_csv_format_10(df, dir_list_split, campaign_name, accrual_campaign
         df.loc[:,['Date', 'Publisher','Accrual campaign name', 'Campaign Name','Device', 'GEO', 'Impressions', 'Clicks', 'Views', 'Spends']].to_csv(output_file_path, index=False)
         
         print("New CSV file created successfully.")  
+        message = f"{accrual_campaign_name}_{publisher_name_file_10} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_10} - Failed error - {str(e)}"
 
 def create_new_csv_format_11(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:
@@ -814,9 +854,12 @@ def create_new_csv_format_11(df, dir_list_split, campaign_name, accrual_campaign
         df.loc[:,['Date', 'Publisher','Accrual campaign name', 'Campaign Name','Device', 'Impressions', 'Clicks']].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")  
+        message = f"{accrual_campaign_name}_{publisher_name_file_11} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_11} - Failed error - {str(e)}"
 
 
 # Only Created for Jupiter Beauty
@@ -863,9 +906,12 @@ def create_new_csv_format_12(df, dir_list_split, campaign_name, accrual_campaign
         df.loc[:,['Date', 'Publisher','Accrual campaign name', 'Campaign Name','Concept Name','GEO','Impressions', 'Clicks','Spends',]].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")  
+        message = f"{accrual_campaign_name}_{publisher_name_file_12} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_12} - Failed error - {str(e)}"
 
 def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:
@@ -898,104 +944,109 @@ def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign
         df.to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")  
+        message = f"{accrual_campaign_name}_{publisher_name_file_13} - Processed Successfully"
+        return message
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
+        return f"{accrual_campaign_name}_{publisher_name_file_13} - Failed error - {str(e)}"
 
 def final_operation(dir_list):
-    for i in range(len(dir_list)):
+    # for i in range(len(dir_list)):
         # start_date_time = None
         # end_date_time = None
 
-        excel_file_path = dir_list[i]
+    excel_file_path = dir_list
+    
+    if ".xlsx" in excel_file_path: 
+        df = pd.read_excel(f"{path}{excel_file_path}")
+    elif ".csv" in excel_file_path:
+        df = pd.read_csv(f"{path}{excel_file_path}")
+    else:
+        print("File format recheck")   
+
+    filename_without_extenstion = list(os.path.splitext(dir_list))
+    # print (f'Filename without extension - {filename_without_extenstion}')
+    
+    try:
+        dir_list_split = str(filename_without_extenstion[0]).split('_')
+        publisher_name = dir_list_split[2]
+        campaign_name = dir_list_split[1]
+        accrual_campaign_name = dir_list_split[0]
+        df.columns = df.columns.str.strip()
+
+        # print(publisher_name)
+        # message = ''
+
+        print(f"File name - {dir_list_split}")
+        if get_publisher_1(publisher_name) is not None:
+            print("amazing 1 publisher found")
+            message = create_new_csv_format_1(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_2(publisher_name) is not None:
+            print("amazing 2 publisher found")
+            message = create_new_csv_format_2(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_3(publisher_name) is not None:
+            print("amazing 3 publisher found")
+            message = create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_4(publisher_name) is not None:
+            print("amazing 4 publisher found")
+            message = create_new_csv_format_4(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_5(publisher_name) is not None:
+            print("amazing 5 publisher found")
+            message = create_new_csv_format_5(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_6(publisher_name) is not None:
+            print("amazing 6 publisher found")
+            message = create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_7(publisher_name) is not None:
+            print("amazing 7 publisher found")
+            message = create_new_csv_format_7(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_8(publisher_name) is not None:
+            print("amazing 8 publisher found")
+            message = create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
         
-        if ".xlsx" in excel_file_path: 
-            df = pd.read_excel(f"{path}{excel_file_path}")
-        elif ".csv" in excel_file_path:
-            df = pd.read_csv(f"{path}{excel_file_path}")
+        elif get_publisher_9(publisher_name) is not None:
+            print("amazing 9 publisher found")
+            message = create_new_csv_format_9(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_10(publisher_name) is not None:
+            print("amazing 10 publisher found")
+            message = create_new_csv_format_10(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_11(publisher_name) is not None:
+            print("amazing 11 publisher found")
+            message = create_new_csv_format_11(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+        
+        elif get_publisher_12(publisher_name) is not None:
+            print("amazing 12 publisher found")
+            message = create_new_csv_format_12(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
+        elif get_publisher_13(publisher_name) is not None:
+            print("amazing 13 publisher found")
+            message = create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
+
         else:
-            print("File format recheck")   
+            print("failed")
+        # df['check'] = dir_list_split[0]
 
-        filename_without_extenstion = list(os.path.splitext(dir_list[i]))
-        # print (f'Filename without extension - {filename_without_extenstion}')
+        uploaded_files = os.listdir("static/files")
+        final_cleaned_files_list = os.listdir("final_cleaned_files/")
+
+        if len(uploaded_files) == len(final_cleaned_files_list):
+            for i in range(10):
+                print(f'Awesome * {len(final_cleaned_files_list)}')
         
-        try:
-            dir_list_split = str(filename_without_extenstion[0]).split('_')
-            publisher_name = dir_list_split[2]
-            campaign_name = dir_list_split[1]
-            accrual_campaign_name = dir_list_split[0]
-            df.columns = df.columns.str.strip()
+        return message
 
-            # print(publisher_name)
-
-            print(f"File name - {dir_list_split}")
-            if get_publisher_1(publisher_name) is not None:
-                print("amazing 1 publisher found")
-                create_new_csv_format_1(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_2(publisher_name) is not None:
-                print("amazing 2 publisher found")
-                create_new_csv_format_2(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_3(publisher_name) is not None:
-                print("amazing 3 publisher found")
-                create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_4(publisher_name) is not None:
-                print("amazing 4 publisher found")
-                create_new_csv_format_4(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_5(publisher_name) is not None:
-                print("amazing 5 publisher found")
-                create_new_csv_format_5(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_6(publisher_name) is not None:
-                print("amazing 6 publisher found")
-                create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_7(publisher_name) is not None:
-                print("amazing 7 publisher found")
-                create_new_csv_format_7(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_8(publisher_name) is not None:
-                print("amazing 8 publisher found")
-                create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-            
-            elif get_publisher_9(publisher_name) is not None:
-                print("amazing 9 publisher found")
-                create_new_csv_format_9(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_10(publisher_name) is not None:
-                print("amazing 10 publisher found")
-                create_new_csv_format_10(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_11(publisher_name) is not None:
-                print("amazing 11 publisher found")
-                create_new_csv_format_11(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-            
-            elif get_publisher_12(publisher_name) is not None:
-                print("amazing 12 publisher found")
-                create_new_csv_format_12(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            elif get_publisher_13(publisher_name) is not None:
-                print("amazing 13 publisher found")
-                create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name)
-
-            else:
-                print("failed")
-            # df['check'] = dir_list_split[0]
-
-            final_cleaned_files_list = os.listdir("final_cleaned_files/")
-
-            if len(dir_list) == len(final_cleaned_files_list):
-                for i in range(10):
-                    print(f'Awesome * {len(final_cleaned_files_list)}')
-            
-        except Exception as e:
-            print("errorrrrrrrr")
-        # time.sleep(2)
+    except Exception as e:
+        print("errorrrrrrrr")
+    # time.sleep(2)
 
 if __name__ == "__main__":
     final_operation(dir_list)
-
-
