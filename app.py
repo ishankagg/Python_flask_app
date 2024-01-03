@@ -33,8 +33,18 @@ def index():
             files_filename.append(file.filename)
             file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], file.filename))
         
-        result = final_operation(files_filename)
-        return render_template('uploaded.html', files_filename=files_filename, result=result)
+        print(files_filename)
+        
+        files_filename_message = []
+        for files in files_filename:
+            e = final_operation(files)
+            print(e)
+            files_filename_message.append(e)
+
+        # result = final_operation(files_filename)
+        return render_template('uploaded.html', files_filename=files_filename_message)
+        # trying new branch
+        # trying new branch
         # except Exception as e:
 
     
