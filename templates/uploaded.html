@@ -12,7 +12,11 @@
 <h2>File uploaded succesfully</h2>
 <ul>
     {% for file in files_filename %}
+        {% if 'Error' in file %}
+            <li class="error">{{file}}</li>
+        {% else %}
             <li>{{file}}</li>
+        {% endif %}
     {% endfor %}
 
 </ul>

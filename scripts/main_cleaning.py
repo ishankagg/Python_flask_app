@@ -294,7 +294,7 @@ def create_new_csv_format_1(df, dir_list_split, campaign_name, accrual_campaign_
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_1} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_1} - Failed Error - {str(e)}"
 
 
 
@@ -336,7 +336,7 @@ def create_new_csv_format_2(df, dir_list_split, campaign_name, accrual_campaign_
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_2} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_2} - Failed Error - {str(e)}"
 
 
 def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
@@ -421,7 +421,7 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         return message
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_9} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_9} - Failed Error - {str(e)}"
 
 
 def create_new_csv_format_4(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
@@ -505,7 +505,7 @@ def create_new_csv_format_4(df, dir_list_split, campaign_name, accrual_campaign_
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_4} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_4} - Failed Error - {str(e)}"
 
 
 
@@ -576,7 +576,7 @@ def create_new_csv_format_5(df, dir_list_split, campaign_name, accrual_campaign_
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_5} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_5} - Failed Error - {str(e)}"
 
 def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:        
@@ -617,7 +617,7 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_6} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_6} - Failed Error - {str(e)}"
 
 
 def create_new_csv_format_7(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
@@ -675,7 +675,7 @@ def create_new_csv_format_7(df, dir_list_split, campaign_name, accrual_campaign_
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_7} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_7} - Failed Error - {str(e)}"
 
 
 def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
@@ -767,7 +767,7 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_8} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_8} - Failed Error - {str(e)}"
     
     # return f"{accrual_campaign_name}_{publisher_name_file_8}-Success"
 
@@ -794,7 +794,7 @@ def create_new_csv_format_9(df, dir_list_split, campaign_name, accrual_campaign_
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_9} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_9} - Failed Error - {str(e)}"
 
 def create_new_csv_format_10(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:                
@@ -828,7 +828,7 @@ def create_new_csv_format_10(df, dir_list_split, campaign_name, accrual_campaign
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_10} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_10} - Failed Error - {str(e)}"
 
 def create_new_csv_format_11(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:
@@ -865,7 +865,7 @@ def create_new_csv_format_11(df, dir_list_split, campaign_name, accrual_campaign
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_11} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_11} - Failed Error - {str(e)}"
 
 
 # Only Created for Jupiter Beauty
@@ -917,7 +917,7 @@ def create_new_csv_format_12(df, dir_list_split, campaign_name, accrual_campaign
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_12} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_12} - Failed Error - {str(e)}"
 
 def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:
@@ -955,7 +955,7 @@ def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign
 
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_13} - Failed error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_13} - Failed Error - {str(e)}"
 
 def final_operation(dir_list):
     # for i in range(len(dir_list)):
@@ -1052,6 +1052,7 @@ def final_operation(dir_list):
 
     except Exception as e:
         print("errorrrrrrrr")
+        return f'{dir_list} - Failed Error - {str(e)}'
     # time.sleep(2)
 
 if __name__ == "__main__":
