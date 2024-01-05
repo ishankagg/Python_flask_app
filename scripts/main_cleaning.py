@@ -312,10 +312,10 @@ def create_new_csv_format_2(df, dir_list_split, campaign_name, accrual_campaign_
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
 
-        df['GEO'] = df['Ad Name'].apply(get_geo)
+        df['GEO'] = df['Geos'].apply(get_geo)
 
         # Renaming columns names to main format
-        df.rename(columns = {'Ad Name':'Concept Name'}, inplace = True)
+        df.rename(columns = {'Geos':'Concept Name'}, inplace = True)
 
         # Formatting the date
         start_date_time, end_date_time = formating_date(df, campaign_name, publisher_name)
@@ -403,6 +403,8 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         if publisher_name.strip().title() == 'Hipi':
             df['GEO'] = df['Line Item Name']
 
+        df['GEO'].fillna(df['Concept Name'].apply(get_geo), inplace=True)
+
         # Formatting the date
         start_date_time, end_date_time = formating_date(df, campaign_name, publisher_name)
 
@@ -421,7 +423,7 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         return message
     except Exception as e:
         print(f"Error processing the Excel file: {e}")
-        return f"{accrual_campaign_name}_{publisher_name_file_9} - Failed Error - {str(e)}"
+        return f"{accrual_campaign_name}_{publisher_name_file_3} - Failed Error - {str(e)}"
 
 
 def create_new_csv_format_4(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
