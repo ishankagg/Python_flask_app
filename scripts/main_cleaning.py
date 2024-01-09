@@ -518,47 +518,82 @@ def create_new_csv_format_5(df, dir_list_split, campaign_name, accrual_campaign_
         first_column_name = column_names[0]
         date_column_name = column_names[1]
 
-        # Find the index to drop rows up to "Line Item"
-        index_to_drop_to = df[df[first_column_name] == 'Roadblock'].index[0]
-        df_cleaned = df.drop(range(index_to_drop_to))  # Adjust range to include the "Line Item" row
+        if publisher_name.strip().title() == 'Demand Gen':
+            df = df.dropna(how='all')
+            df = df.dropna(how='all', axis=1)
 
-        # Reset the index
-        df_cleaned.reset_index(drop=True, inplace=True)
+            default_columns = list(df.columns)
+            first_column_name = default_columns[0]
+            # first_column_name
 
-        # Change the header of the file
-        new_header = df_cleaned.iloc[0]
-        df_cleaned = df_cleaned[1:]
-        df_cleaned.columns = new_header.tolist()
+            index_to_drop_to = df[df[first_column_name] == 'Publisher'].index[0]
 
-        # Reset the index
-        df_cleaned.reset_index(drop=True, inplace=True)
+            df_cleaned = df.drop(range(index_to_drop_to))
 
-        # Removing the total row
-        df_cleaned = df_cleaned[df_cleaned['Roadblock'] != 'Total']
+            # Reset the index
+            df_cleaned.reset_index(drop=True, inplace=True)
 
-        column_names = list(df_cleaned.columns)
-        first_column_name_2 = column_names[0]
+            # Set the second row as the new header
+            new_header = list(df_cleaned.iloc[0])
+            df_cleaned = df_cleaned[1:]
+            df_cleaned.columns = new_header
 
-        if 'Roadblock' in publisher_name:
-            df_cleaned['Concept Name'] = 'Roadblock'
+            # Reset the index
+            df_cleaned.reset_index(drop=True, inplace=True)
+
+            # index = df_cleaned[df_cleaned['Reporting Date'] == df_cleaned['Reporting Date'].iloc[-1]].index[0]
+
+            columns_to_fill = ['Publisher', 'Campaign Name', 'Duration', 'Line Item Name','Concept Name', 'Geo Targeting']
+            df_cleaned[columns_to_fill] = df_cleaned[columns_to_fill].fillna(method='ffill')
+
+            df_cleaned.rename(columns={'Reporting Date': 'Date', 'Geo Targeting': 'GEO'}, inplace=True)
+
         else:
-            df_cleaned['Concept Name'] = 'Something Else'
+            # Find the index to drop rows up to "Line Item"
+            index_to_drop_to = df[df[first_column_name] == 'Roadblock'].index[0]
+            df_cleaned = df.drop(range(index_to_drop_to))  # Adjust range to include the "Line Item" row
+
+            # Reset the index
+            df_cleaned.reset_index(drop=True, inplace=True)
+
+            # Change the header of the file
+            new_header = df_cleaned.iloc[0]
+            df_cleaned = df_cleaned[1:]
+            df_cleaned.columns = new_header.tolist()
+
+            # Reset the index
+            df_cleaned.reset_index(drop=True, inplace=True)
+
+            # Removing the total row
+            df_cleaned = df_cleaned[df_cleaned['Roadblock'] != 'Total']
+
+            column_names = list(df_cleaned.columns)
+            first_column_name_2 = column_names[0]
+
+            if 'Roadblock' in publisher_name:
+                df_cleaned['Concept Name'] = 'Roadblock'
+            else:
+                df_cleaned['Concept Name'] = 'Something Else'
+
+            
+            df_cleaned.rename(columns={first_column_name_2: 'Date', 'Ad Impressions': 'Impressions'}, inplace=True)
+
+
+            df_cleaned['GEO'] = ''
+            df_cleaned['Spends'] = ''
+
+            for i in range(len(df_cleaned['Date'])):
+                for date in df_cleaned['Date']:
+                    day_without_suffix = date.split()[0].rstrip("stndrdth")
+                    parsed_date = datetime.strptime(day_without_suffix + " " + " ".join(date.split()[1:]), "%d %B %Y")
+                    formatted_date = parsed_date.strftime("%Y-%m-%d")
+                    df_cleaned[['Date'][i]] = formatted_date
+
 
         
-        df_cleaned.rename(columns={first_column_name_2: 'Date', 'Ad Impressions': 'Impressions'}, inplace=True)
-
         df_cleaned['Campaign Name'] = campaign_name
         df_cleaned['Publisher'] = publisher_name
         df_cleaned['Accrual campaign name'] = accrual_campaign_name
-        df_cleaned['GEO'] = ''
-        df_cleaned['Spends'] = ''
-
-        for i in range(len(df_cleaned['Date'])):
-            for date in df_cleaned['Date']:
-                day_without_suffix = date.split()[0].rstrip("stndrdth")
-                parsed_date = datetime.strptime(day_without_suffix + " " + " ".join(date.split()[1:]), "%d %B %Y")
-                formatted_date = parsed_date.strftime("%Y-%m-%d")
-                df_cleaned[['Date'][i]] = formatted_date
         
         # Formatting the date
         start_date_time, end_date_time = formating_date(df_cleaned, campaign_name, publisher_name)

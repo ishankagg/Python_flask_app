@@ -4,9 +4,31 @@ path_1 = "final_cleaned_files"
 path_2 = "output"
 path_3 = "static/files"
 
-dir_list_1 = os.listdir(path_1)
-dir_list_2 = os.listdir(path_2)
-dir_list_3 = os.listdir(path_3)
+dir_list_1 = []
+
+for file in os.listdir(path_1):
+    if file == '.gitkeep':
+        continue
+    else:
+        dir_list_1.append(file)
+
+
+dir_list_2 = []
+
+for file in os.listdir(path_2):
+    if file == '.gitkeep':
+        continue
+    else:
+        dir_list_2.append(file)
+
+
+dir_list_3 = []
+
+for file in os.listdir(path_3):
+    if file == '.gitkeep':
+        continue
+    else:
+        dir_list_3.append(file)
 
 
 def clean_files():

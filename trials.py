@@ -576,7 +576,7 @@ df['Clicks'] = df['Clicks'].apply(pd.to_numeric)
 
 import pandas as pd
 
-input_file_path_plan = "static/files/Amazon WRS Campaign (Nov-Dec 2023)_Sale_Truecaller-Impact.xlsx"
+input_file_path_plan = "Amz SVD Jan 24_Amz SVD Jan 24_Demand Gen.xlsx"
 # output_file_path = 'cleaned_pinkvilla.csv'
 output_file_path = f"cleaned_1234.csv"
 
@@ -585,60 +585,36 @@ accrual_campaign_name = 'Jupiter Specials'
 publisher_name = 'DSP'
 dir_list_split = ['abc','123','Vogue']
 df = pd.read_excel(input_file_path_plan)
-df
-
 df.columns
 
-column_names = list(df.columns)
-first_column_name = column_names[0]
+df = df.dropna(how='all')
+df = df.dropna(how='all', axis=1)
 
-index_to_drop_to = df[df[first_column_name] == 'Date'].index[0]
+default_columns = list(df.columns)
+first_column_name = default_columns[0]
+# first_column_name
 
-df = df.drop(range(index_to_drop_to))
+index_to_drop_to = df[df[first_column_name] == 'Publisher'].index[0]
 
-# Reset the index
-df.reset_index(drop=True, inplace=True)
-
-# Change the header of the file
-new_header = df.iloc[0]
-df = df[1:]
-df.columns = new_header.tolist()
+df_cleaned = df.drop(range(index_to_drop_to))
 
 # Reset the index
-df.reset_index(drop=True, inplace=True)
+df_cleaned.reset_index(drop=True, inplace=True)
 
+# Set the second row as the new header
+new_header = list(df_cleaned.iloc[0])
+df_cleaned = df_cleaned[1:]
+df_cleaned.columns = new_header
 
-import re
-import pandas as pd
-from sentence_transformers import SentenceTransformer, util
-from transformers import AutoTokenizer, AutoModel
-import os
+df_cleaned.reset_index(drop=True, inplace=True)
 
-re.split(' - | _ |- |_',a)
+index = df_cleaned[df_cleaned['Reporting Date'] == df_cleaned['Reporting Date'].iloc[-1]].index[0]
 
-# Given string
-geo = pd.read_csv('main_input_files\Geo.csv')
-geo_data = str(tuple(geo['Geos'].tolist()))
+columns_to_fill = ['Publisher', 'Campaign Name', 'Duration', 'Line Item Name','Concept Name', 'Geo Targeting']
+df_cleaned[columns_to_fill] = df_cleaned[columns_to_fill].fillna(method='ffill')
 
+df_cleaned['Reporting Date']
 
-line_item_name = "Amazon_Fresh SVD_IN_E-Commerce_Agency_Non PG_1st Jan-7th Jan_2024_Surat"
+df_cleaned.columns
 
-
-def get_geo(line_item_name):
-    parts = re.split('_| - ', str(line_item_name))
-    print(parts)
-    for part in parts:
-        if part.strip().lower() == 'in':
-            continue
-        elif part.strip().lower() in geo_data.strip().lower():
-            print(part)
-            return part
-    return None
-
-get_geo(line_item_name)
-
-'Indore' in geo_data
-geo_data
-
-
-
+'.xlsx' in 'Amz SVD Jan 24_Amz SVD Jan 24_Demand Gen.xlsx'
