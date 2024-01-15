@@ -344,7 +344,7 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         
         # print(publisher_name_file_3)added
         default_columns = list(df.columns)
-        view_columns = ['Publisher','Geo Targeting','Concept Name','Views', '25% Views', '50% Views', '75% Views', '100% Views','Spends']
+        view_columns = ['Line Item Name','Publisher','Geo Targeting','Concept Name','Views', '25% Views', '50% Views', '75% Views', '100% Views','Spends']
 
         # check views column 
         for heads in view_columns:
@@ -380,9 +380,14 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         #     df['Geo Targeting'] = df['Geo']
 
         # For jupiter sale - Glance
-        if publisher_name.strip().title() == 'Times Network' or 'Healthshots':
-            df['Concept Name'] = df['Line Item Name']
+        # if publisher_name.strip().title() == 'Times Network' or 'Healthshots':
+        #     df['Concept Name'] = df['Line Item Name']
 
+        if publisher_name.strip().title() == 'Huella':
+            df['Impressions'] = df['OPS']
+            df['Concept Name'] = df['Creative Name']
+            df['Geo Targeting'] = df['Geo']
+            
         # Rename the columns as per the user input
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
@@ -400,8 +405,8 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
             df['GEO'] = df['Geo Targeting']
 
         # Renaming columns names to main format for Jupiter beauty - Hipi
-        if publisher_name.strip().title() == 'Hipi':
-            df['GEO'] = df['Line Item Name']
+        # if publisher_name.strip().title() == 'Hipi':
+        #     df['GEO'] = df['Line Item Name']
 
         df['GEO'].fillna(df['Concept Name'].apply(get_geo), inplace=True)
 
@@ -616,7 +621,9 @@ def create_new_csv_format_5(df, dir_list_split, campaign_name, accrual_campaign_
         return f"{accrual_campaign_name}_{publisher_name_file_5} - Failed Error - {str(e)}"
 
 def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
-    try:        
+    try:
+        # df = df[df['Line item'] != 'Total']
+
         # Split the "Line Item Name" column and get the "GEO" value
         df['GEO'] = df['Line item'].apply(get_geo)
 
@@ -631,7 +638,7 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
             df.rename(columns = {'Line item':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
             # df['Concept Name'] = ''
         else: 
-            df.rename(columns = {'Line item':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
+            df.rename(columns = {'Creative':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
             # df['Concept Name'] = ''
             df['Spends'] = ''
 
