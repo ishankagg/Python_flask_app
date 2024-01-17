@@ -638,7 +638,7 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
 
 
         # Renaming specific columns in the DataFrame
-        if publisher_name == 'Inshorts':
+        if publisher_name.strip().title() == 'Inshorts' or 'Tv9 Kannada' or 'Olx':
             df.rename(columns = {'Line item':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
             # df['Concept Name'] = ''
         else: 
@@ -743,9 +743,9 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
         df = df.drop(range(index_to_drop_to))
 
         # Find the index to drop rows after "Total"
-        index_to_drop_after = df[df[first_column_name] == 'Total'].index[0]
+        # index_to_drop_after = df[df[first_column_name] == 'Total'].index[0]
 
-        df = df.loc[:index_to_drop_after-1]
+        # df = df.loc[:index_to_drop_after-1]
 
         # Reset the index
         df.reset_index(drop=True, inplace=True)
@@ -791,7 +791,7 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
 
         # print(publisher_name_file_3)added
         default_columns = list(df.columns)
-        view_columns = ['Geo Targeting','Concept Name','Views', '25% Views', '50% Views', '75% Views', '100% Views']
+        view_columns = ['Geo Targeting','Concept Name','Views', '25% Views', '50% Views', '75% Views', '100% Views','Spends']
 
         # check views column 
         for heads in view_columns:
