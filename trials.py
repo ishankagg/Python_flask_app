@@ -576,7 +576,7 @@ df['Clicks'] = df['Clicks'].apply(pd.to_numeric)
 
 import pandas as pd
 
-input_file_path_plan = "Amz SVD Jan 24_Amz SVD Jan 24_Demand Gen.xlsx"
+input_file_path_plan = "Amz SVD Jan 24_Amz SVD Jan 24_Youtube.xlsx"
 # output_file_path = 'cleaned_pinkvilla.csv'
 output_file_path = f"cleaned_1234.csv"
 
@@ -585,6 +585,7 @@ accrual_campaign_name = 'Jupiter Specials'
 publisher_name = 'DSP'
 dir_list_split = ['abc','123','Vogue']
 df = pd.read_excel(input_file_path_plan)
+df['Date']
 df.columns
 
 df = df.dropna(how='all')

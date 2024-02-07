@@ -52,8 +52,8 @@ def dashboard_file():
         # Drop unnecessary columns
         df_merged = df_merged.drop(['Identifiers', 'Accrual Campaign Name', 'Engagements', 'Reach', 'tacs_id'], axis=1)
 
-        # Deleting duplicates
-        df_merged = df_merged.drop_duplicates(subset=df_merged.columns.to_list())
+        # # Deleting duplicates
+        # df_merged = df_merged.drop_duplicates(subset=df_merged.columns.to_list())
 
         # Write selected columns to CSV for dashboard output
         df_merged.loc[:,['POD', 'Campaign Name', 'Date', 'Publisher', 'Brand', 'Line Item Name', 'Concept Name', 'Geo Targeting','Planned Impressions' ,'Delivered Impressions', 'Planned Clicks','Delivered Clicks', 'Planned Views','Delivered Views', '25% Views', '50% Views', '75% Views', '100% Views', 'Planned Spends','Delivered Spends']].to_excel(dashboard_output_file_path, index=False)

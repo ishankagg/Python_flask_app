@@ -362,6 +362,10 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         # Removing NA and total rows
         df = df[df['Publisher'] != 'Total']
         df = df.dropna(how='all')
+
+        if 'Reporting Date' in df.columns:
+            df['Date'] = df['Reporting Date']
+
         df = df.dropna(subset = ['Date'])
 
          # Reset the index
@@ -405,8 +409,12 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         if 'Targeting' in df.columns:
             # df['GEO'] = df['Targeting'] + ',' + df['Geo Targeting']
             df['GEO'] = df['Targeting']
+        elif 'Geo' in df.columns:
+            df['GEO'] = df['Geo']
         else:
             df['GEO'] = df['Geo Targeting']
+
+
 
         # Renaming columns names to main format for Jupiter beauty - Hipi
         # if publisher_name.strip().title() == 'Hipi':
@@ -629,7 +637,7 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
         # df = df[df['Line item'] != 'Total']
 
         # Split the "Line Item Name" column and get the "GEO" value
-        df['GEO'] = df['Line item'].apply(get_geo)
+        df['GEO'] = df['Line Item'].apply(get_geo)
 
         # Assigning the column values
         df['Accrual campaign name'] = accrual_campaign_name
@@ -638,12 +646,15 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
 
 
         # Renaming specific columns in the DataFrame
-        if publisher_name.strip().title() == 'Inshorts' or 'Tv9 Kannada' or 'Olx':
-            df.rename(columns = {'Line item':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
+        if publisher_name.strip().title() == 'Inshorts' or 'Tv9 Kannada' or 'Olx' or 'Truecaller':
+            df.rename(columns = {'Line Item':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
             # df['Concept Name'] = ''
         else: 
             df.rename(columns = {'Creative':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
             # df['Concept Name'] = ''
+            df['Spends'] = ''
+
+        if 'Spends' not in df.columns:
             df['Spends'] = ''
 
 
@@ -733,7 +744,7 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
         column_names = list(df.columns)
         first_column_name = column_names[0]
 
-        if publisher_name == 'Airtel':
+        if publisher_name in ['Airtel', 'Uber']:
             # Find the index to drop rows up to "Line Item"
             index_to_drop_to = df[df[first_column_name] == 'Date'].index[0]
         else:
@@ -768,6 +779,10 @@ def create_new_csv_format_8(df, dir_list_split, campaign_name, accrual_campaign_
         df['Accrual campaign name'] = accrual_campaign_name
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
+
+        if publisher_name.strip().title() == 'Uber':
+            df['Geo'] = df['Campaign Name'].apply(get_geo)
+            df = df[df['Date'] != 'Total']
 
         if 'Line Item Name' in df.columns:
             df['Concept Name'] = df['Line Item Name']
@@ -980,20 +995,22 @@ def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign
             "Ad name": "Concept Name", 
             "Link clicks":"Clicks",
             "Amount spent (INR)":"Spends"}, inplace=True)
+            df['GEO'] = df['Geo']
 
         else:
             df.rename(columns=
                 {"Reporting Starts": "Date", 
                 "Ad Variant Name": "Concept Name", 
                 "Impressions (SUM)":"Impressions",
-                "Facebook Link Clicks (SUM)":"Clicks",
+                # "Facebook Link Clicks (SUM)":"Clicks",
+                "Clicks (SUM)":"Clicks",
                 "Spent in INR (SUM)":"Spends",
                 "Facebook Video Plays to 25% (SUM)":"25% Views",
                 "Facebook Video Plays to 50% (SUM)":"50% Views",
                 "Facebook Video Plays to 75% (SUM)":"75% Views",
                 "Facebook Video Plays to 100% (SUM)":"100% Views"}, inplace=True)
-        
-        df['GEO'] = df['Ad set name'].apply(get_geo)
+                
+            df['GEO'] = df['Ad Set Name'].apply(get_geo)
 
         
         # Formatting the date
