@@ -15,7 +15,7 @@ from main_cleaning import final_operation
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
-app.config['UPLOAD_FOLDER'] = "static//files"
+app.config['UPLOAD_FOLDER'] = "static\\files"
 
 class UploadFileForm(FlaskForm):
     files = MultipleFileField('File(s)', validators=[InputRequired(), FileAllowed(['xlsx', 'csv'], 'Excel and CSV files only!')])
