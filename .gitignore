@@ -1,10 +1,6 @@
 __pycache__/
-halo
-halo_file.py
-myenv
 .vscode
 .gitignore
-.venv
 output/*
 !output/.gitkeep
 scripts\__pycache__
