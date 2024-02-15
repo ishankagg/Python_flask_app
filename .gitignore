@@ -1,5 +1,4 @@
 __pycache__
-halo
-halo_file.py
 .venv
-
+output/*
+!output/.gitkeep
