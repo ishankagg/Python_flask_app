@@ -411,7 +411,7 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
             df['GEO'] = df['Targeting']
         elif 'Geo' in df.columns:
             df['GEO'] = df['Geo']
-        else:
+        elif 'Geo Targeting' in df.columns:
             df['GEO'] = df['Geo Targeting']
 
 
