@@ -7,11 +7,13 @@ from dateutil import parser
 
 path = "final_cleaned_files/"
 dir_list = os.listdir(path)
+geo_data = pd.read_csv('main_input_files/Geo.csv')
+geo_target_data = pd.read_csv('main_input_files/Geo_Target.csv')
 
 
 def missing_column_names(df):
     default_columns = list(df.columns)
-    view_columns = ['Date','Publisher','Campaign Name','Accrual Campaign Name','Device','Concept Name','Geo','Metro/Non Metro', 'Platform', 'Section', 'Ad Unit', 'Targeting', 'Deal Type','Impressions','Clicks','Engagements','Reach','Views', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']
+    view_columns = ['Date','Publisher','Campaign Name','Accrual Campaign Name','Device','Line Item Name','Concept Name','Geo','Metro/Non Metro', 'Platform', 'Section', 'Ad Unit', 'Targeting', 'Deal Type','Impressions','Clicks','Engagements','Reach','Views', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']
 
     # check views column 
     for heads in view_columns:
@@ -55,6 +57,26 @@ def apply_column_to_int(df):
     except ValueError as e:
         print(f'problem in - {e}')
 
+def extract_geo(df):
+    try:
+        df['Geo_Target'] = ''
+        df['Geo'] = df['Geo'].astype(str)
+        geo_data['Geos'] = geo_data['Geos'].astype(str)
+        geo_target_data['Geo_Target'] = geo_target_data['Geo_Target'].astype(str)
+        for i in range(len(df)):
+            for j in range(len(geo_data)):
+                if df['Geo'][i] in geo_data['Geos'][j]:
+                    df['Geo'][i] = geo_data['Geos'][j]
+                else:
+                    pass
+            for k in range(len(geo_target_data)):
+                if df['Geo_Target'][i] in str(geo_target_data['Geo_Target'][k]):
+                    df['Geo_Target'][i] = str(geo_target_data['Geo_Target'][k])
+                else:
+                    pass
+        return df
+    except ValueError as e:
+        print(f'problem in - {e}')
 
 def final_file_output():
     try:
@@ -81,10 +103,21 @@ def final_file_output():
         # Renaming Campaign name to Phase
         df_concat = df_concat.rename(columns={'Campaign Name':'Identifiers'})
 
+        # Extracting Geo
+        # df_concat = extract_geo(df_concat)
+        # df_concat['Geo_City'] = df_concat['Geo'].str.extract(r"(\w+)(?=\sT\d+)")
+        # df_concat['Geo_Target'] = df_concat['Geo'].str.extract(r"(\w+\s\w+\sT\d+\s-\s\w+)$")
+
+        # Extract Geo_Target
+        df_concat['Geo_Target'] = df_concat['Geo'].str.extract(r'(\bT\d+\s*-\s*\w+\b)')
+
+        # Extract Geo_city
+        df_concat['Geo_City'] = df_concat['Geo'].str.extract(r'(AP/TL|Delhi|Goa|Gujarat|Karnataka|Kerala|Maharashtra|ROI|Tamilnadu|UP|Uttaranchal|West Bengal)') 
+
         # Apply int colum function
         apply_column_to_int(df_concat)
 
-        df_concat = df_concat.loc[:,['Date','Publisher','Identifiers','Accrual Campaign Name','Device','Concept Name','Geo','Metro/Non Metro', 'Platform', 'Section', 'Ad Unit', 'Targeting', 'Deal Type','Impressions','Clicks','Engagements','Reach','Views', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']]
+        df_concat = df_concat.loc[:,['Date','Publisher','Identifiers','Accrual Campaign Name','Device','Line Item Name','Concept Name','Geo','Geo_City','Geo_Target','Metro/Non Metro', 'Platform', 'Section', 'Ad Unit', 'Targeting', 'Deal Type','Impressions','Clicks','Engagements','Reach','Views', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']]
         
         # Writing df_concat to single file
         df_concat.to_csv('output/files_combined.csv', index=False)

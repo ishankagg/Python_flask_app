@@ -340,7 +340,9 @@ def create_new_csv_format_2(df, dir_list_split, campaign_name, accrual_campaign_
 
 
 def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
-    try:        
+    try:
+        # df columns to title case
+        df.columns = df.columns.str.title()     
         
         # print(publisher_name_file_3)added
         default_columns = list(df.columns)
@@ -387,10 +389,10 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         # if publisher_name.strip().title() == 'Times Network' or 'Healthshots':
         #     df['Concept Name'] = df['Line Item Name']
 
-        if publisher_name.strip().title() == 'Huella':
-            df['Impressions'] = df['OPS']
-            df['Concept Name'] = df['Creative Name']
-            df['Geo Targeting'] = df['Geo']
+        # if publisher_name.strip().title() == 'Huella':
+        #     df['Impressions'] = df['OPS']
+        #     df['Concept Name'] = df['Creative Name']
+        #     df['Geo Targeting'] = df['Geo']
         
         if publisher_name.strip().title() == 'Bobbleai':
             df['Concept Name'] = df['Line Item Name']
@@ -433,7 +435,7 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         output_file_path = f"final_cleaned_files/cleaned_{accrual_campaign_name}_{publisher_name_file_3}_{start_date_time}_{end_date_time}.csv"
 
         # Save the new DataFrame as a CSV file
-        df.loc[:,['Date', 'Publisher', 'Campaign Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Engagements', 'Clicks', 'Views', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']].to_csv(output_file_path, index=False)
+        df.loc[:,['Date', 'Publisher', 'Campaign Name','Line Item Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Engagements', 'Clicks', 'Views', '25% Views', '50% Views', '75% Views', '100% Views', 'Spends']].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")
         message = f"{accrual_campaign_name}_{publisher_name_file_3} - Processed Successfully"
@@ -635,6 +637,8 @@ def create_new_csv_format_5(df, dir_list_split, campaign_name, accrual_campaign_
 def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:
         # df = df[df['Line item'] != 'Total']
+
+        df.columns = [x.title() if x.lower() in ['line item'] else x for x in df.columns]
 
         # Split the "Line Item Name" column and get the "GEO" value
         df['GEO'] = df['Line Item'].apply(get_geo)

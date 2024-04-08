@@ -25,17 +25,18 @@ def dashboard_file():
 
         # Convert campaign names to lowercase for case-insensitive merge
         df_final_file['Accrual Campaign Name'] = df_final_file['Accrual Campaign Name'].str.lower()
-        df_campaign_detail['Accrual Campaign Name'] = df_campaign_detail['Accrual Campaign Name'].str.lower()
+        # df_campaign_detail_merge = df_campaign_detail.copy()
+        df_campaign_detail['Accrual Campaign Name Lowered'] = df_campaign_detail['Accrual Campaign Name'].str.lower()
 
         # Merge the DataFrames on 'Accrual campaign name'
-        df_merged = pd.merge(df_final_file, df_campaign_detail, how='left', on='Accrual Campaign Name', left_index=False, right_index=False)
+        df_merged = pd.merge(df_final_file, df_campaign_detail, how='left', left_on='Accrual Campaign Name', right_on='Accrual Campaign Name Lowered', left_index=False, right_index=False)
 
         # Convert 'tacs_id' to uppercase and 'Accrual campaign name' to title case
         df_merged['tacs_id'] = df_merged['tacs_id'].str.upper()
-        df_merged['Accrual Campaign Name'] = df_merged['Accrual Campaign Name'].str.title()
+        # df_merged['Accrual Campaign Name'] = df_merged['Accrual Campaign Name'].str.title()
 
         # Create 'Campaign name' by combining 'tacs_id' and 'Accrual campaign name'
-        df_merged['Campaign Name'] = df_merged['tacs_id'].astype(str) + "_" + df_merged['Accrual Campaign Name']
+        df_merged['Campaign Name'] = df_merged['tacs_id'].astype(str) + "_" + df_merged['Accrual Campaign Name_y']
 
         # Change GEO column to GEO Targeting
         df_merged = df_merged.rename(columns={'Geo': 'Geo Targeting', 'Impressions':'Delivered Impressions', 'Clicks':'Delivered Clicks', 'Views':'Delivered Views', 'Spends':'Delivered Spends'})
@@ -49,12 +50,18 @@ def dashboard_file():
         # If geo is blank, then fill it with 'Pan India'abs
         df_merged['Geo Targeting'] = df_merged['Geo Targeting'].fillna('Pan India')
 
+        # Filling na values with 0
+        df_merged[["Delivered Views", "25% Views", "50% Views", "75% Views", "100% Views"]] = df_merged[["Delivered Views", "25% Views", "50% Views", "75% Views", "100% Views"]].fillna(0)
+
         # Initialize 'Brand', 'Line Item Name' columns
         df_merged['Brand'] = df_merged['Identifiers']
-        df_merged['Line Item Name'] = df_merged['Publisher'] + "_" + df_merged['Accrual Campaign Name'] + "_" + df_merged['Geo Targeting']
+        df_merged['Line Item Name'] = df_merged['Publisher'] + "_" + df_merged['Accrual Campaign Name_y'] + "_" + df_merged['Geo Targeting']
+
+        # df_merged['Campaign Name 2'] = df_merged['Campaign Name'].str.split('_', expand=True)[0]
+
 
         # Drop unnecessary columns
-        df_merged = df_merged.drop(['Identifiers', 'Accrual Campaign Name', 'Engagements', 'Reach', 'tacs_id'], axis=1)
+        df_merged = df_merged.drop(['Identifiers', 'Accrual Campaign Name_x', 'Engagements', 'Reach', 'tacs_id'], axis=1)
 
         # # Deleting duplicates
         # df_merged = df_merged.drop_duplicates(subset=df_merged.columns.to_list())
