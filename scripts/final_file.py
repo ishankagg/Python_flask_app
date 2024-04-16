@@ -107,12 +107,16 @@ def final_file_output():
         # df_concat = extract_geo(df_concat)
         # df_concat['Geo_City'] = df_concat['Geo'].str.extract(r"(\w+)(?=\sT\d+)")
         # df_concat['Geo_Target'] = df_concat['Geo'].str.extract(r"(\w+\s\w+\sT\d+\s-\s\w+)$")
+        # df_concat['Geo'].astype(str)
 
-        # Extract Geo_Target
-        df_concat['Geo_Target'] = df_concat['Geo'].str.extract(r'(\bT\d+\s*-\s*\w+\b)')
-
-        # Extract Geo_city
-        df_concat['Geo_City'] = df_concat['Geo'].str.extract(r'(AP/TL|Delhi|Goa|Gujarat|Karnataka|Kerala|Maharashtra|ROI|Tamilnadu|UP|Uttaranchal|West Bengal)') 
+        if df_concat['Accrual Campaign Name'][1] == 'AMZ EA Thematic H1 24':
+            # Extract Geo_Target
+            df_concat['Geo_Target'] = df_concat['Geo'].str.extract(r'(\bT\d+\s*-\s*\w+\b)')
+            # Extract Geo_city
+            df_concat['Geo_City'] = df_concat['Geo'].str.extract(r'(AP/TL|Delhi|Goa|Gujarat|Karnataka|Kerala|Maharashtra|ROI|Tamilnadu|UP|Uttaranchal|West Bengal)') 
+        else:
+            df_concat['Geo_Target'] = ''
+            df_concat['Geo_City'] = ''
 
         # Apply int colum function
         apply_column_to_int(df_concat)

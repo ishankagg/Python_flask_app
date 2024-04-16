@@ -21,7 +21,7 @@ def dashboard_file():
         df_campaign_detail = pd.read_csv(campaign_details_input)
 
         # Convert Date column from dd-mm-yyyy to dd/mm/yyyy
-        df_final_file['Date'] = pd.to_datetime(df_final_file['Date']).dt.strftime('%d-%m-%Y')
+        df_final_file['Date'] = pd.to_datetime(df_final_file['Date']).dt.strftime('%Y-%m-%d')
 
         # Convert campaign names to lowercase for case-insensitive merge
         df_final_file['Accrual Campaign Name'] = df_final_file['Accrual Campaign Name'].str.lower()

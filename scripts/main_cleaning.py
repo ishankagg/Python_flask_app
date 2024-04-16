@@ -656,7 +656,7 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
         else: 
             df.rename(columns = {'Creative':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
             # df['Concept Name'] = ''
-            df['Spends'] = ''
+            # df['Spends'] = ''
 
         if 'Spends' not in df.columns:
             df['Spends'] = ''
