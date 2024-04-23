@@ -637,6 +637,8 @@ def create_new_csv_format_5(df, dir_list_split, campaign_name, accrual_campaign_
 def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_name, publisher_name):
     try:
         # df = df[df['Line item'] != 'Total']
+        if 'Line Item' not in df.columns.str.title():
+            df['Line Item'] = ''
 
         df.columns = [x.title() if x.lower() in ['line item'] else x for x in df.columns]
 
