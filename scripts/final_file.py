@@ -9,6 +9,7 @@ path = "final_cleaned_files/"
 dir_list = os.listdir(path)
 geo_data = pd.read_csv('main_input_files/Geo.csv')
 geo_target_data = pd.read_csv('main_input_files/Geo_Target.csv')
+df_concept_name_upi = pd.read_excel('main_input_files/Concept_Name_UPI.xlsx')
 
 
 def missing_column_names(df):
@@ -78,6 +79,40 @@ def extract_geo(df):
     except ValueError as e:
         print(f'problem in - {e}')
 
+# For Campaign Name - Amz Pay UPI Launch Q2 24
+def extract_concept_name(concept_name):
+    try:
+        # Concept_Name_Revised = concept_name.split('_')[15]
+        not_found = 'Not Found'
+        # for i in range(len(concept_name)):
+        for j in range(len(df_concept_name_upi)):
+            text = concept_name.lower()
+            if text.endswith(df_concept_name_upi['Concept'][j]):
+                # print('Found')
+                return df_concept_name_upi['Concept Name'][j]
+            else:
+                pass
+        return not_found
+    except ValueError as e:
+        print(f'problem in - {e}')
+
+def extract_platform(concept_name):
+    try:
+        try:
+            Concept_Name_Revised = concept_name.split('_')[8]
+            # print(Concept_Name_Revised)
+        except:
+            Concept_Name_Revised = concept_name.str.split('_')[8]
+            # print(Concept_Name_Revised)
+        if Concept_Name_Revised.upper() == 'CTV':
+            return 'CTV'
+        elif Concept_Name_Revised.upper() == 'MOB':
+            return 'Mobile'
+        else:
+            return 'None'
+    except ValueError as e:
+        print(f'problem in - {e}')
+
 def final_file_output():
     try:
         for files in dir_list:
@@ -117,6 +152,20 @@ def final_file_output():
         else:
             df_concat['Geo_Target'] = ''
             df_concat['Geo_City'] = ''
+
+        if df_concat['Accrual Campaign Name'][1] == 'Amz Pay UPI Launch Q2 24':
+            df_concat['Concept Name Revised'] = ''
+            for i in range(len(df_concat)): 
+                # if df_concat['Publisher'][i] == 'Youtube':
+                try:
+                    df_concat['Concept Name Revised'][i] = df_concat['Concept Name'][i].split('_')[15]
+                except:
+                    continue
+                df_concat.at[i, 'Concept Name Revised'] = extract_concept_name(df_concat.at[i, 'Concept Name Revised'])
+                df_concat.at[i, 'Platform'] = extract_platform(df_concat.at[i, 'Concept Name'])
+                df_concat['Concept Name'][i] = df_concat['Concept Name Revised'][i]
+                    
+
 
         # Apply int colum function
         apply_column_to_int(df_concat)

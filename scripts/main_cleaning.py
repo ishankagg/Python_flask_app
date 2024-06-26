@@ -359,6 +359,18 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
                 df[heads] = ''  
             else:
                 print("fu")
+        
+        column_name = None
+
+        for col in df.columns:
+            if col.strip().lower() == 'line item':
+                column_name = col
+                break
+
+        if column_name is None:
+            pass
+        else:
+            df['Line Item Name'] = df[column_name]
 
 
         # Removing NA and total rows
@@ -652,7 +664,7 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
 
 
         # Renaming specific columns in the DataFrame
-        if publisher_name.strip().title() == 'Inshorts' or 'Tv9 Kannada' or 'Olx' or 'Truecaller':
+        if publisher_name.strip().title() == 'Inshorts' or 'Tv9 Kannada' or 'Olx':
             df.rename(columns = {'Line Item':'Concept Name', 'Ad server impressions':'Impressions', 'Ad server clicks':'Clicks'}, inplace = True)
             # df['Concept Name'] = ''
         else: 
@@ -995,6 +1007,9 @@ def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign
         df['Campaign Name'] = campaign_name
         df['Publisher'] = publisher_name
 
+        df.columns = df.columns.str.strip()
+        df.columns = df.columns.str.title()
+
         if publisher_name.strip().title() == 'Fb+Ig':
             df.rename(columns=
             { 
@@ -1006,17 +1021,23 @@ def create_new_csv_format_13(df, dir_list_split, campaign_name, accrual_campaign
         else:
             df.rename(columns=
                 {"Reporting Starts": "Date", 
-                "Ad Variant Name": "Concept Name", 
-                "Impressions (SUM)":"Impressions",
+                "Ad Name": "Concept Name", 
+                "Region":"GEO",
+                "Impressions (Sum)":"Impressions",
                 # "Facebook Link Clicks (SUM)":"Clicks",
-                "Clicks (SUM)":"Clicks",
-                "Spent in INR (SUM)":"Spends",
-                "Facebook Video Plays to 25% (SUM)":"25% Views",
-                "Facebook Video Plays to 50% (SUM)":"50% Views",
-                "Facebook Video Plays to 75% (SUM)":"75% Views",
-                "Facebook Video Plays to 100% (SUM)":"100% Views"}, inplace=True)
+                # "Clicks (Sum)":"Clicks",
+                # "Clicks (All)":"Clicks",
+                'Link Clicks':'Clicks',
+                'Facebook Link Clicks':'Clicks',
+                "Spent":"Spends",
+                "Spent In Inr (Sum)":"Spends",
+                "Amount Spent (Inr)": "Spends",
+                "Facebook Video Plays To 25% (Sum)":"25% Views",
+                "Facebook Video Plays To 50% (Sum)":"50% Views",
+                "Facebook Video Plays To 75% (Sum)":"75% Views",
+                "Facebook Video Plays To 100% (Sum)":"100% Views"}, inplace=True)
                 
-            df['GEO'] = df['Ad Set Name'].apply(get_geo)
+            # df['GEO'] = df['Ad Set Name'].apply(get_geo)
 
         
         # Formatting the date
