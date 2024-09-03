@@ -135,8 +135,8 @@ def return_success(e):
 def get_publisher_1(publisher_name):
     for publisher in publisher_format_1:
         if publisher.strip().lower() == publisher_name.strip().lower():
-            global publisher_name_file
-            publisher_name_file = publisher
+            global publisher_name_file_1
+            publisher_name_file_1 = publisher
             return publisher
     return None
 
@@ -283,7 +283,7 @@ def create_new_csv_format_1(df, dir_list_split, campaign_name, accrual_campaign_
         # start_date = start_date_time.strftime('%d-%m-%Y')
         # end_date = end_date_time.strftime('%d-%m-%Y')
 
-        output_file_path = f"final_cleaned_files/cleaned_{accrual_campaign_name}_{publisher_name_file}_{start_date_time}_{end_date_time}.csv"  # Replace this with the desired output CSV file path
+        output_file_path = f"final_cleaned_files/cleaned_{accrual_campaign_name}_{publisher_name_file_1}_{start_date_time}_{end_date_time}.csv"  # Replace this with the desired output CSV file path
 
         # Save the new DataFrame as a CSV file
         df.loc[:,['Date', 'Publisher', 'Campaign Name','Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks']].to_csv(output_file_path, index=False)
