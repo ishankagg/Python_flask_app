@@ -15,13 +15,13 @@ dashboard_output_file_path = "output/dashboard_file.xlsx"
 
 
 def dashboard_file():
-    try:
+    try:    
         # Load the final file and campaign details CSV data
         df_final_file = pd.read_csv(final_file_input)
         df_campaign_detail = pd.read_csv(campaign_details_input)
 
         # Convert Date column from dd-mm-yyyy to dd/mm/yyyy
-        df_final_file['Date'] = pd.to_datetime(df_final_file['Date'], format = '%d-%m-%Y')
+        df_final_file['Date'] = pd.to_datetime(df_final_file['Date'], format = '%Y-%m-%d')
         # df_final_file['Date'] = pd.to_datetime(df_final_file['Date']).dt.strftime('%Y-%m-%d')
 
         # Convert campaign names to lowercase for case-insensitive merge

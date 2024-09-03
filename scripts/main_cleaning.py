@@ -372,6 +372,33 @@ def create_new_csv_format_3(df, dir_list_split, campaign_name, accrual_campaign_
         else:
             df['Line Item Name'] = df[column_name]
 
+        view_columns = ["Trueview: Views", "First-Quartile Views (Video)", "Midpoint Views (Video)", "Third-Quartile Views (Video)", "Complete Views (Video)"]
+
+        for col in view_columns:
+            if col in df.columns:
+                try:
+                    df['Views'] = df['Trueview: Views']
+                except:
+                    pass    
+                df['25% Views'] = df['First-Quartile Views (Video)']
+                df['50% Views'] = df['Midpoint Views (Video)']
+                df['75% Views'] = df['Third-Quartile Views (Video)']
+                df['100% Views'] = df['Complete Views (Video)']
+                # df = df.rename(columns = {"TrueView: Views": "True Views", "First-Quartile Views (Video)": "25% Views", "Midpoint Views (Video)": "50% Views", "Third-Quartile Views (Video)": "75% Views", "Complete Views (Video)": "100% Views"})
+
+        view_columns = ["Video 1St Quartile", "Video 2Nd Quartile", "Video 3Rd Quartile", "Video 4Th Quartile"]
+
+        for col in view_columns:
+            if col in df.columns:
+                df['25% Views'] = df['Video 1St Quartile']
+                df['50% Views'] = df['Video 2Nd Quartile']
+                df['75% Views'] = df['Video 3Rd Quartile']
+                df['100% Views'] = df['Video 4Th Quartile']
+                # df = df.rename(columns = {"Video 1st Quartile":"25% Views", "Video 2nd Quartile":"50% Views", "Video 3rd Quartile":"75% Views", "Video 4th Quartile":"100% Views"})
+
+        # Renaming columns names to main format
+        df = df.rename(columns={'Ad Server Impressions': 'Impressions', 'Ad Server Clicks': 'Clicks'})
+
 
         # Removing NA and total rows
         df = df[df['Publisher'] != 'Total']
@@ -686,7 +713,7 @@ def create_new_csv_format_6(df, dir_list_split, campaign_name, accrual_campaign_
 
         output_file_path = f"final_cleaned_files/cleaned_{accrual_campaign_name}_{publisher_name_file_6}_{start_date_time}_{end_date_time}.csv"
 
-        df.loc[:, ['Date', 'Publisher', 'Campaign Name', 'Accrual campaign name', 'Concept Name', 'GEO', 'Impressions', 'Clicks', 'Spends']].to_csv(output_file_path, index=False)
+        df.loc[:, ['Date', 'Publisher', 'Campaign Name', 'Accrual campaign name', 'Line Item Name', 'Concept Name', 'GEO', 'Impressions', 'Clicks', 'Spends']].to_csv(output_file_path, index=False)
 
         print("New CSV file created successfully.")
         message = f"{accrual_campaign_name}_{publisher_name_file_6} - Processed Successfully"
